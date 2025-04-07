@@ -1,0 +1,100 @@
+1. Prepare Your Server (Check Web Server)
+Ensure your Linux server has a web server like Nginx or Apache installed to serve the files. If not, let's install one.
+
+To check if Nginx or Apache is installed:
+# For Nginx
+nginx -v
+
+# For Apache
+apache2 -v
+If neither is installed, you can install one.
+
+To install Nginx:
+sudo apt update
+sudo apt install nginx
+
+To install Apache:
+sudo apt update
+sudo apt install apache2
+
+
+2. Copy Your Frontend Files to the Server's Web Directory
+Your frontend folder contains the necessary files (e.g., index.html, assets-bt). You need to copy these files to the web server's directory.
+
+By default:
+Nginx uses /var/www/html/.
+Apache uses /var/www/html/.
+
+Let's assume you’re using Nginx (you can adjust if you're using Apache).
+
+Navigate to your frontend folder:
+cd /home/bizgaze/brihas-chat_bot/frontend
+
+
+Copy all files to the web server directory:
+sudo cp -r * /var/www/html/
+
+
+3. Configure the Web Server (Nginx or Apache)
+If you're using Nginx:
+Edit the default Nginx config file to make sure it points to /var/www/html where you placed your frontend files:
+sudo nano /etc/nginx/sites-available/default
+
+Make sure the server block points to the correct root directory:
+nginx
+
+server {
+    listen 80;
+    server_name _;
+
+    root /var/www/html;  # <-- Make sure this path is correct
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+Restart Nginx to apply the changes:
+sudo systemctl restart nginx
+
+If you're using Apache:
+Make sure the default config file points to the correct directory:
+sudo nano /etc/apache2/sites-available/000-default.conf
+
+Update the DocumentRoot directive to /var/www/html (if it’s not already):
+
+apache
+
+<VirtualHost *:80>
+    DocumentRoot /var/www/html
+    ServerAdmin webmaster@localhost
+    ServerName your-server-ip-or-domain
+
+    <Directory /var/www/html>
+        AllowOverride All
+        Require all granted
+    </Directory>
+</VirtualHost>
+
+
+Restart Apache:
+sudo systemctl restart apache2
+
+
+4. Verify the Deployment
+Once the files are copied and the web server is configured, open your browser and visit your server’s IP address or domain name.
+
+For example:
+http://your_server_ip
+You should see your frontend (i.e., index.html) displayed.
+
+5. Troubleshooting
+If you’re not seeing your website:
+
+Ensure that your firewall is allowing HTTP traffic (port 80). You can check and allow the HTTP port by running:
+sudo ufw allow 'Nginx Full'
+
+Check if the Nginx or Apache service is running:
+sudo systemctl status nginx
+sudo systemctl status apache2
