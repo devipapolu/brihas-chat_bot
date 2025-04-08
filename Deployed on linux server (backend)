@@ -19,8 +19,7 @@ sudo apt install nginx -y  # Install Nginx for reverse proxy
 Step 2: Create and Navigate to the Application Folder
 Now, create a directory for your chatbot application and navigate into it:
 
-bash
-Copy
+
 mkdir mychatbot
 cd mychatbot
 Step 3: Set Up Python Virtual Environment
