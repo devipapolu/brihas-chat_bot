@@ -407,7 +407,8 @@ async def submit_form(name: str = Form(...), email: str = Form(...), phone: str 
 
 @app.get("/download-brochure")
 async def download_brochure():
-    brochure_path = "/home/sahasra/Downloads/GenAI/rag-tutorial-v2/data_brihaspathi/updated_brochure_BTL_25-01-2025.pdf"
+  brochure_path = "data_brihaspathi/updated brochure BTL 25-01-2025.pdf"
+
     if os.path.exists(brochure_path):
         return FileResponse(brochure_path, media_type='application/pdf', filename="updated_brochure_BTL_25-01-2025.pdf")
     else:
