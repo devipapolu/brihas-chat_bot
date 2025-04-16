@@ -1,3 +1,21 @@
+sudo apt update -y
+sudo apt upgrade -y
+sudo apt install python3-pip python3-dev build-essential -y
+sudo apt install git -y
+sudo apt install curl -y
+sudo apt install python3-venv -y
+sudo apt install nginx -y
+mkdir mychatbot
+cd mychatbot
+python3 -m venv venv
+source venv/bin/activate
+git clone https://github.com/yourusername/your-repository.git
+cd your-repository
+pip install -r requirements.txt
+python app.py
+pip install gunicorn
+gunicorn -w 3 -b 0.0.0.0:8000 app:app
+
 Setting Up Python Application on EC2 with SSL (HTTPS) and Nginx:(chat_bot_backend)
 
 
