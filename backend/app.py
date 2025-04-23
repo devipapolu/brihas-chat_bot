@@ -407,12 +407,21 @@ async def submit_form(name: str = Form(...), email: str = Form(...), phone: str 
 
 @app.get("/download-brochure")
 async def download_brochure():
-  brochure_path = "data_brihaspathi/updated brochure BTL 25-01-2025.pdf"
+    # Using relative path
+    brochure_path = os.path.join(os.path.dirname(__file__), 'data_brihaspathi', 'updated brochure BTL 25-01-2025.pdf')
 
-    if os.path.exists(brochure_path):
-        return FileResponse(brochure_path, media_type='application/pdf', filename="updated_brochure_BTL_25-01-2025.pdf")
-    else:
+    # Debug: print the path to confirm it's correct
+    print(f"Brochure path: {brochure_path}")
+
+    if not os.path.exists(brochure_path):
+        logging.error(f"Brochure not found at {brochure_path}")
         raise HTTPException(status_code=404, detail="Brochure not found")
+
+    # Log that the download is starting
+    logging.info("Brochure is downloading")
+
+    return FileResponse(brochure_path, filename="updated brochure BTL 25-01-2025.pdf", media_type="application/pdf")
+
 
 if __name__ == "__main__":
     import uvicorn
