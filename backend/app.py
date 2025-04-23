@@ -5,6 +5,7 @@ from pymongo import MongoClient
 from typing import List
 from datetime import datetime
 import pytz
+import logging
 import os
 import difflib
 from langchain_chroma import Chroma
